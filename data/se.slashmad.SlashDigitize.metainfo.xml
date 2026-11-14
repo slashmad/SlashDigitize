@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+ <id>se.slashmad.SlashDigitize</id>
+ <metadata_license>CC0-1.0</metadata_license>
+ <project_license>GPL-3.0-or-later</project_license>
+ <name>SlashDigitize</name>
+ <developer id="se.slashmad"><name>slashmad</name></developer>
+ <url type="homepage">https://github.com/slashmad/SlashDigitize</url>
+ <url type="bugtracker">https://github.com/slashmad/SlashDigitize/issues</url>
+ <summary>Digitize and process audio, video and image sequences</summary>
+ <description><p>A GTK4 application for direct ALSA audio recording, FFmpeg video capture, trimming, timelapse and optional VapourSynth processing.</p><p>The audio recorder preserves explicit hardware capture, graceful WAV finalization, XRUN reporting and an optional tape-end detector.</p></description>
+ <launchable type="desktop-id">se.slashmad.SlashDigitize.desktop</launchable>
+ <provides><binary>slashdigitize</binary></provides>
+ <content_rating type="oars-1.1"/>
+ <releases><release version="0.1.0" date="2026-11-14"><description><p>Initial combined development version.</p></description></release></releases>
+</component>

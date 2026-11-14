@@ -1,0 +1,192 @@
+/* SlashDigitize theme.
+ * Built on libadwaita CSS variables so native widgets stay coherent.
+ * Brand colours come from the app icon: violet accent, red for recording. */
+
+:root {
+  --accent-bg-color: #8a4fd8;
+  --accent-color: #bf98f5;
+  --accent-fg-color: #ffffff;
+
+  --window-bg-color: #16161b;
+  --view-bg-color: #1b1b21;
+  --headerbar-bg-color: #16161b;
+  --headerbar-shade-color: rgb(0 0 0 / 0.45);
+  --sidebar-bg-color: #101014;
+  --sidebar-shade-color: rgb(0 0 0 / 0.5);
+  --card-bg-color: #1f1f26;
+  --card-shade-color: rgb(0 0 0 / 0.4);
+  --dialog-bg-color: #1f1f26;
+  --popover-bg-color: #26262e;
+
+  --sd-rec: #e8323d;
+  --sd-rec-soft: rgb(232 50 61 / 0.16);
+  --sd-ok: #3ccf91;
+  --sd-ok-soft: rgb(60 207 145 / 0.14);
+  --sd-warn: #f2b84b;
+  --sd-warn-soft: rgb(242 184 75 / 0.15);
+  --sd-line: rgb(255 255 255 / 0.07);
+  --sd-line-strong: rgb(255 255 255 / 0.12);
+}
+
+/* ---------- Sidebar ---------- */
+
+.sd-sidebar headerbar { background: var(--sidebar-bg-color); box-shadow: none; }
+.sd-brand-title { font-weight: 800; letter-spacing: 0.2px; }
+
+.sd-nav { background: transparent; padding: 4px 8px; }
+.sd-nav row { border-radius: 9px; padding: 8px 10px; margin: 1px 0; min-height: 22px; }
+.sd-nav row:selected {
+  background: rgb(138 79 216 / 0.22);
+  box-shadow: inset 3px 0 0 var(--accent-bg-color);
+}
+.sd-nav row:selected image { color: var(--accent-color); }
+.sd-nav row image { opacity: 0.85; }
+.sd-nav-section {
+  font-size: 0.72em; font-weight: 800; letter-spacing: 1.2px;
+  opacity: 0.45; margin: 16px 12px 6px 12px;
+}
+.sd-nav-dot {
+  min-width: 8px; min-height: 8px; border-radius: 99px;
+  background: var(--sd-rec);
+  animation: sd-pulse 1.4s ease-in-out infinite;
+}
+
+.sd-session {
+  margin: 10px; padding: 12px 14px; border-radius: 12px;
+  background: rgb(255 255 255 / 0.035);
+  border: 1px solid var(--sd-line);
+}
+.sd-session.recording { background: var(--sd-rec-soft); border-color: rgb(232 50 61 / 0.35); }
+.sd-session-title { font-weight: 700; }
+.sd-session-sub { font-size: 0.86em; opacity: 0.6; }
+
+/* ---------- Header REC pill ---------- */
+
+.sd-rec-pill {
+  background: var(--sd-rec-soft); color: #ffd7da;
+  border-radius: 99px; padding: 2px 12px 2px 10px; min-height: 26px;
+  font-weight: 800; font-feature-settings: "tnum";
+  border: 1px solid rgb(232 50 61 / 0.45);
+}
+.sd-rec-pill:hover { background: rgb(232 50 61 / 0.26); }
+.sd-rec-dot {
+  min-width: 9px; min-height: 9px; border-radius: 99px; background: var(--sd-rec);
+  animation: sd-pulse 1.4s ease-in-out infinite;
+}
+@keyframes sd-pulse { 0% { opacity: 1; } 50% { opacity: 0.25; } 100% { opacity: 1; } }
+
+/* ---------- Page scaffolding ---------- */
+
+.sd-page { padding: 18px 24px 30px 24px; }
+.sd-page-title { font-size: 1.55em; font-weight: 800; }
+.sd-page-lead { opacity: 0.6; }
+
+.sd-card {
+  background: var(--card-bg-color);
+  border: 1px solid var(--sd-line);
+  border-radius: 14px;
+  padding: 18px;
+}
+.sd-card.flat { padding: 0; }
+.sd-hero {
+  background-image: linear-gradient(160deg, rgb(138 79 216 / 0.14), rgb(138 79 216 / 0.0) 55%);
+  background-color: var(--card-bg-color);
+  border: 1px solid var(--sd-line-strong);
+  border-radius: 18px;
+  padding: 20px 22px;
+}
+.sd-hero.recording {
+  background-image: linear-gradient(160deg, rgb(232 50 61 / 0.18), rgb(232 50 61 / 0.0) 60%);
+  border-color: rgb(232 50 61 / 0.35);
+}
+
+.sd-timer {
+  font-size: 46px; font-weight: 300; letter-spacing: 1px;
+  font-feature-settings: "tnum";
+}
+.sd-timer.recording { color: #ffffff; font-weight: 400; }
+.sd-meta { font-size: 0.9em; opacity: 0.65; font-feature-settings: "tnum"; }
+.sd-caption { font-size: 0.8em; font-weight: 700; letter-spacing: 0.8px; opacity: 0.5; }
+
+/* boxed lists inside our cards: softer borders */
+.sd-groups list.boxed-list { border: 1px solid var(--sd-line); box-shadow: none; }
+
+/* ---------- Status pills ---------- */
+
+.sd-pill {
+  border-radius: 99px; padding: 3px 10px; font-size: 0.82em; font-weight: 700;
+  background: rgb(255 255 255 / 0.07); color: rgb(255 255 255 / 0.78);
+  font-feature-settings: "tnum";
+}
+.sd-pill.ok { background: var(--sd-ok-soft); color: var(--sd-ok); }
+.sd-pill.warn { background: var(--sd-warn-soft); color: var(--sd-warn); }
+.sd-pill.error, .sd-pill.rec { background: var(--sd-rec-soft); color: #ff8a92; }
+.sd-pill.accent { background: rgb(138 79 216 / 0.2); color: var(--accent-color); }
+
+.sd-chip {
+  border-radius: 8px; padding: 4px 9px; font-size: 0.85em;
+  background: rgb(255 255 255 / 0.05); border: 1px solid var(--sd-line);
+  font-family: monospace;
+}
+
+.sd-stat-value { font-size: 2.1em; font-weight: 300; font-feature-settings: "tnum"; }
+.sd-stat-value.ok { color: var(--sd-ok); }
+.sd-stat-value.warn { color: var(--sd-warn); }
+.sd-stat-value.error { color: #ff8a92; }
+
+/* ---------- Bottom action dock ---------- */
+
+.sd-dock { padding: 10px 20px; background: var(--headerbar-bg-color); }
+.sd-dock-status { font-feature-settings: "tnum"; }
+
+button.sd-record {
+  background: var(--sd-rec); color: white; font-weight: 800;
+  border-radius: 99px; padding: 8px 24px 8px 18px; min-height: 30px;
+  box-shadow: 0 2px 10px rgb(232 50 61 / 0.35);
+  transition: background 150ms, box-shadow 150ms;
+}
+button.sd-record:hover { background: #f2414c; box-shadow: 0 2px 16px rgb(232 50 61 / 0.55); }
+button.sd-record.stop {
+  background: transparent; color: #ff9aa1;
+  box-shadow: inset 0 0 0 2px var(--sd-rec);
+}
+button.sd-record.stop:hover { background: var(--sd-rec-soft); }
+button.sd-record:disabled { background: rgb(255 255 255 / 0.08); color: rgb(255 255 255 / 0.5); box-shadow: none; }
+
+button.sd-primary { font-weight: 800; padding: 8px 22px; }
+
+/* ---------- Drop zones / previews ---------- */
+
+.sd-drop {
+  border: 2px dashed rgb(255 255 255 / 0.13);
+  border-radius: 16px;
+  background: rgb(255 255 255 / 0.015);
+}
+.sd-drop.hover { border-color: var(--accent-bg-color); background: rgb(138 79 216 / 0.08); }
+
+.sd-preview { background: #0a0a0d; border-radius: 12px; border: 1px solid var(--sd-line); }
+.sd-overlay-chip {
+  background: rgb(0 0 0 / 0.55); color: white; border-radius: 6px;
+  padding: 2px 8px; font-size: 0.8em; font-weight: 700; margin: 10px;
+}
+
+/* ---------- Code views ---------- */
+
+.sd-code { border-radius: 12px; border: 1px solid var(--sd-line); background: #121217; }
+.sd-code textview, .sd-code text { background: transparent; }
+.sd-code-header { padding: 6px 8px 6px 14px; border-bottom: 1px solid var(--sd-line); }
+
+.sd-help-hero { padding: 26px 0 10px 0; }
+
+.sd-thumb { border-radius: 6px; }
+
+/* ---------- Live pictures, logs ---------- */
+
+.sd-preview picture { border-radius: 12px; }
+.sd-log, .sd-log text { background: #121217; font-size: 0.92em; }
+.sd-notice { padding: 10px 14px; border-radius: 10px; background: var(--sd-warn-soft); color: var(--sd-warn); }
+.sd-notice.error { background: var(--sd-rec-soft); color: #ff8a92; }
+.sd-nudge button { min-width: 44px; padding-left: 6px; padding-right: 6px; font-feature-settings: "tnum"; }
+.sd-mono { font-family: monospace; font-feature-settings: "tnum"; }
+.sd-nav-dot.busy { background: var(--accent-bg-color); animation: none; opacity: 0.8; }
+.sd-drop-hover { outline: 2px dashed var(--accent-bg-color); outline-offset: 4px; border-radius: 14px; }

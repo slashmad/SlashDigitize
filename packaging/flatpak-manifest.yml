@@ -1,0 +1,30 @@
+app-id: se.slashmad.SlashDigitize
+runtime: org.gnome.Platform
+runtime-version: "51"
+sdk: org.gnome.Sdk
+command: slashdigitize
+finish-args:
+  - --share=ipc
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --share=network
+  - --socket=pulseaudio
+  - --device=all
+  - --talk-name=org.freedesktop.Flatpak
+  - --filesystem=/run/udev:ro
+  - --filesystem=host
+modules:
+  - name: slashdigitize
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/share/slashdigitize
+      - cp -r src/slashdigitize /app/share/slashdigitize/
+      - install -Dpm 0755 packaging/flatpak-launcher /app/bin/slashdigitize
+      - install -Dpm 0644 data/se.slashmad.SlashDigitize.desktop /app/share/applications/se.slashmad.SlashDigitize.desktop
+      - install -Dpm 0644 data/se.slashmad.SlashDigitize.metainfo.xml /app/share/metainfo/se.slashmad.SlashDigitize.metainfo.xml
+      - install -Dpm 0644 data/se.slashmad.SlashDigitize.png /app/share/icons/hicolor/512x512/apps/se.slashmad.SlashDigitize.png
+      - install -Dpm 0644 README.md /app/share/doc/slashdigitize/README.md
+      - install -Dpm 0644 LICENSE /app/share/licenses/slashdigitize/LICENSE
+    sources:
+      - type: dir
+        path: ..

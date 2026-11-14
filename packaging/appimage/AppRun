@@ -1,0 +1,30 @@
+#!/bin/sh
+set -eu
+SLASHDIGITIZE_APPDIR=${APPDIR:-$(CDPATH= cd -- "${0%/*}" && pwd -P)}
+export SLASHDIGITIZE_APPDIR
+unset PYTHONHOME PYTHONPATH
+export PATH="$SLASHDIGITIZE_APPDIR/usr/bin:$PATH"
+export GI_TYPELIB_PATH="$SLASHDIGITIZE_APPDIR/usr/lib/girepository-1.0"
+export GTK_PATH="$SLASHDIGITIZE_APPDIR/usr/lib/gtk-4.0"
+export XDG_DATA_DIRS="$SLASHDIGITIZE_APPDIR/usr/share:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
+export GSETTINGS_SCHEMA_DIR="$SLASHDIGITIZE_APPDIR/usr/share/glib-2.0/schemas"
+export GIO_EXTRA_MODULES="$SLASHDIGITIZE_APPDIR/usr/lib/gio/modules"
+export GIO_MODULE_DIR="$GIO_EXTRA_MODULES"
+export GST_PLUGIN_SYSTEM_PATH_1_0="$SLASHDIGITIZE_APPDIR/usr/lib/gstreamer-1.0"
+export GST_PLUGIN_PATH_1_0=
+export GST_PLUGIN_SCANNER_1_0="$SLASHDIGITIZE_APPDIR/usr/bin/gst-plugin-scanner"
+export GST_REGISTRY_1_0="${XDG_CACHE_HOME:-$HOME/.cache}/SlashDigitize/appimage-cli-registry.bin"
+export ALSA_CONFIG_DIR="$SLASHDIGITIZE_APPDIR/usr/share/alsa"
+export ALSA_CONFIG_PATH="$ALSA_CONFIG_DIR/alsa.conf"
+export ALSA_PLUGIN_DIR="$SLASHDIGITIZE_APPDIR/usr/lib/alsa-lib"
+export FONTCONFIG_FILE="$SLASHDIGITIZE_APPDIR/etc/fonts/fonts.conf"
+export PYTHONNOUSERSITE=1
+export PYTHONDONTWRITEBYTECODE=1
+case "${1:-}" in
+  --python) shift; exec "$SLASHDIGITIZE_APPDIR/usr/bin/python3" "$@" ;;
+  --ffmpeg) shift; exec "$SLASHDIGITIZE_APPDIR/usr/bin/ffmpeg" "$@" ;;
+  --ffprobe) shift; exec "$SLASHDIGITIZE_APPDIR/usr/bin/ffprobe" "$@" ;;
+  --arecord) shift; exec "$SLASHDIGITIZE_APPDIR/usr/bin/arecord" "$@" ;;
+  --gst-inspect) shift; exec "$SLASHDIGITIZE_APPDIR/usr/bin/gst-inspect-1.0" "$@" ;;
+esac
+exec "$SLASHDIGITIZE_APPDIR/usr/bin/python3" -m slashdigitize "$@"

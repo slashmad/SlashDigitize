@@ -1,0 +1,42 @@
+{
+  "note": "Imported working-copy source, not only HEAD. Hashes identify original files before adaptation.",
+  "sources": [
+    {
+      "source": "SlashmadFFmpegGUI",
+      "head": "4b59623cbe8ce12bdd020ac6cf1d8d90ca050aa4",
+      "imported": {
+        "src/ffmpeg_gui/ui.py": "033da18393be67efddfb763f320be9fbf81c2b9079ae78f0724149e60312a2ef",
+        "src/ffmpeg_gui/encode.py": "02312c39d744978dff286ffd26d9bfd4f2597f1938b2747ebaa1e43447e9c729",
+        "src/ffmpeg_gui/__init__.py": "f71ff6f361e1f4d2351351aaef2bb05facd3642687195b656c34c8989db82f71",
+        "src/ffmpeg_gui/capture.py": "226fff5f5399ab3fc7c2359dcb69c31652e71dc8cad83d360e610a9c821d8fa9",
+        "src/ffmpeg_gui/gui.py": "1ae4c6f434b00a2e170759b39f70b59f013c6872463b42a1ca4db71aaeea6474",
+        "src/ffmpeg_gui/runner.py": "cc19d53f4ccd7ec4a1b38d3c8bac292d04c0d4a0e875b885508e951327209d08",
+        "src/ffmpeg_gui/i18n.py": "83edfa5ffe41026a9538fdcd7ada50a2b078c337f162742fad1845a8e3fd6e63",
+        "src/ffmpeg_gui/vs_stack.py": "307a89a7fdc6985ff6f049dcecce85ecb569f758a4d5ba7942a529bf3f14c04a",
+        "src/ffmpeg_gui/vapoursynth_page.py": "f7b301da8b83a39713573d36195c5eab44387e0433056947d80976a64b485582",
+        "src/ffmpeg_gui/app.py": "3e98a06fa32ac73f824db06550cdd83fc24b2a4b4664c4caf40dfce3eca4cd30",
+        "src/ffmpeg_gui/vapoursynth_process.py": "f37fc55f98523cc63071acfe7d3e9f590211b96096e1242de60c3b2e842bf1cb",
+        "src/ffmpeg_gui/ffmpeg.py": "e6464ceb346aecd20236ced590ed09d956562a5261981f586e94096f29fdf291",
+        "src/ffmpeg_gui/edit.py": "cf6616a3478e86b266430d8c399d0316d04158f3b2614236483c60e4cd14f546",
+        "src/ffmpeg_gui/ui/encode_page.ui": "80016a180e4d051d3acf9c7920226a6b41e1db7f3cbc7821eddf1602eb4ee228",
+        "src/ffmpeg_gui/ui/help_page.ui": "5a9fc44db0016ea516b96049675063ffeed38576a78c8b8c7bd4e039d59ea35b",
+        "src/ffmpeg_gui/ui/vapoursynth_process_page.ui": "2535aaf3c1ab6f4d84198b654244eeca425a041a0ad41b295beb478620d43689",
+        "src/ffmpeg_gui/ui/edit_page.ui": "578cfb0d64e552653de6143a9d9c68db1f40ea8d96975e60e00cae8e7c718c6f",
+        "src/ffmpeg_gui/ui/capture_page.ui": "d2a8ebab0ebdcacc82dedcb48644cc4f0039c6686b662251b93733b452d396e0",
+        "src/ffmpeg_gui/ui/vapoursynth_page.ui": "b4b76ec6c3695b223468d74a87be21aa96f542f11d1c03dfa735119f7eb81b78",
+        "src/ffmpeg_gui/ui/hardware_page.ui": "189334fe7172167ff133342105f6b8e850c374dec42cd51b5e743d49b2c8593b"
+      }
+    },
+    {
+      "source": "slashmad-arecordgui",
+      "head": "1c1bab087a9af9754c0aef02f35666fa511b3030",
+      "imported": {
+        "src/arecordgui/core.py": "fc846160bfe8ecbe7c091c760131d40661695bccfa104951f7f44c21f1475ede",
+        "src/arecordgui/__main__.py": "a67c172046323b0efcafe92cb83abc266d5dd4bc931d9312cde1b7bed50643db",
+        "src/arecordgui/app.py": "6ca628f83a435ee110db81dac2762b6d3070f4e8262feb0571f53b66581f9648",
+        "src/arecordgui/__init__.py": "3b7785ac9e7c793b300e614a3a09048b9a17aadd7e988808128d14f73abac831",
+        "src/arecordgui/auto_stop.py": "cd1d11bded3d16cc1ef84f290da976dfcda0399c20c86e6d354be797cbb9df93"
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=SlashDigitize
+Comment=Digitize and process audio, video and image sequences
+Exec=slashdigitize
+Icon=se.slashmad.SlashDigitize
+Terminal=false
+Categories=AudioVideo;Audio;Video;
+StartupNotify=true
