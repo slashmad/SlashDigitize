@@ -79,11 +79,12 @@ calibrated true-peak measurement system.
 
 ## Install
 
-Download the AppImage from [Releases](https://github.com/slashmad/SlashDigitize/releases).
+Download a package from [Releases](https://github.com/slashmad/SlashDigitize/releases).
 
 | System | File | Requirements |
 |---|---|---|
 | Fedora 45 x86_64 | `SlashDigitize-0.1.0-x86_64-fedora45.AppImage` | Fedora 45 / glibc 2.44 baseline; working display and capture drivers |
+| Linux x86_64 / Flatpak | `SlashDigitize-0.1.0-x86_64.flatpak` | GNOME 51 runtime from Flathub; host Python/FFmpeg/ffprobe/arecord and capture drivers |
 
 ```sh
 chmod +x SlashDigitize-0.1.0-x86_64-fedora45.AppImage
@@ -105,6 +106,27 @@ If FUSE mounting is unavailable, use:
 A checksum and component inventory accompany the release. This build deliberately targets
 Fedora 45; an AppImage built there is not automatically compatible with older distributions.
 It does not install itself or change your drivers.
+
+### Flatpak
+
+Install the downloaded single-file bundle and run it:
+
+```sh
+flatpak install --user ./SlashDigitize-0.1.0-x86_64.flatpak
+flatpak run se.slashmad.SlashDigitize
+```
+
+The bundle points to Flathub for the shared **GNOME 51** runtime. It is a direct
+release download, not a Flathub listing, and it does not contain the runtime itself.
+The GUI and preview libraries run inside Flatpak; media commands use the host's
+`/usr/bin/python3`, FFmpeg, ffprobe and arecord through the existing host helper.
+Install those tools on the host, along with any optional VapourSynth/vspipe filters
+you use. This edition does not include the AppImage's bundled FFmpeg installation.
+
+Capture workflows need device and file access, and the package grants host-tool
+execution for that purpose. Normal Stop still signals the host recorder and waits
+for file finalization. A standalone `.flatpak` download has no automatic update
+repository; install a newer release bundle when one becomes available.
 
 ## Quick start
 
@@ -159,9 +181,16 @@ Builds need setuptools 77+; the GUI smoke test needs Weston. The smoke test uses
 display, simulated devices and a fake WAV recorder. It opens no capture hardware.
 
 The [AppImage recipe](packaging/appimage/README.md) documents its locked runtime, build and
-payload verification. The native RPM uses system dependencies. The experimental Flatpak
-recipe targets GNOME 51 and currently uses host media tools; a complete Flatpak build is not
-part of this release.
+payload verification. The native RPM uses system dependencies. Build the GNOME 51
+Flatpak with an installed matching SDK/runtime:
+
+```sh
+python3 -B scripts/build.py --flatpak --out artifacts/flatpak
+```
+
+The helper exports a `.flatpak` bundle, checksum and build record. It does not
+download SDKs/runtimes or install the application. Flatpak preserves the host-media
+execution policy described above.
 
 ## How it was tested
 

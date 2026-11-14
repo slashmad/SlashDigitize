@@ -1,3 +1,13 @@
 #!/bin/sh
+set -eu
 export PYTHONPATH="/app/share/slashdigitize${PYTHONPATH:+:$PYTHONPATH}"
+# Host FFmpeg/vspipe cannot read Flatpak's private /tmp. The app cache is
+# visible at the same absolute path to both the GUI and flatpak-spawn --host.
+export TMPDIR="${XDG_CACHE_HOME:-$HOME/.cache}/SlashDigitize/host-tmp"
+mkdir -p "$TMPDIR"
+export PYTHONDONTWRITEBYTECODE=1
+if [ "${1:-}" = "--python" ]; then
+    shift
+    exec python3 "$@"
+fi
 exec python3 -m slashdigitize "$@"

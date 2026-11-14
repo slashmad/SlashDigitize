@@ -5,11 +5,14 @@ ALSA dependencies are declared in the spec. FFmpeg and ffprobe are required by
 executable path so either suitable distro or third-party packages may provide
 them. Codec and hardware support must be checked from the actual builds.
 
-The Flatpak manifest targets GNOME Platform/SDK 51; source is copied explicitly
-without Git history, captures or local agent memory. Host processes require
-host Python, arecord, FFmpeg and the optional VapourSynth stack. Output paths,
-host `/tmp` separation, signal delivery and driver access require dedicated
-testing, beyond a successful package build.
+The Flatpak targets GNOME Platform/SDK 51; source is copied explicitly without
+Git history, captures or local agent memory. Its single-file bundle points to
+Flathub for the shared runtime. Host processes require host Python, arecord,
+FFmpeg/ffprobe and the optional VapourSynth stack. The launcher puts Python
+temporary files in the app's host-visible XDG cache before starting the GUI:
+host FFmpeg/vspipe cannot read Flatpak's private `/tmp`. Exact-bundle tests
+cover a production concat file read by host FFmpeg, shared-path synthetic media
+and host-process SIGINT/finalization. Actual capture devices remain unqualified.
 
 A Fedora45 x86_64 AppImage trial is now built with bundled Python/GI/Cairo,
 GTK4/libadwaita/GtkSourceView, GStreamer, FFmpeg9.0.2/ffprobe, arecord/ALSA and
@@ -56,12 +59,11 @@ stack remain external. AppImage's
 also requires a defined Linux/glibc baseline: copying binaries from Fedora45
 does not establish compatibility with older distributions.
 
-Flatpak is the alternative: use GNOME51 for the GUI stack and bundle the media
-components absent from, or requiring a different version than, that runtime.
-[Flatpak documents both mechanisms](https://docs.flatpak.org/en/latest/dependencies.html).
-It needs an explicit sandbox-versus-host execution policy for FFmpeg/ffprobe,
-arecord and vspipe, and renewed path/device/stop/finalization tests. The current
-host-only transport must not be silently redirected. The GNOME51 SDK is not
-installed on the development host, so this Flatpak route remains unbuilt. The
-subsequent AppImage trial supplies the user-space stack independently of Flatpak;
-it does not establish capture qualification or older-distribution compatibility.
+The additional Flatpak build uses GNOME51 for GUI/preview libraries and retains
+host execution for FFmpeg/ffprobe, arecord and vspipe. Bundling those media tools
+inside Flatpak would require a separate transport-policy change; it is not what
+this edition does. [Flatpak documents runtime and application dependencies](https://docs.flatpak.org/en/latest/dependencies.html).
+SDK51 was fetched into an isolated build installation, leaving normal user/system
+installations unchanged. No application installation was needed for the bundle
+round-trip/Platform51 tests. The AppImage supplies its media stack independently;
+neither package establishes real capture or older-host compatibility by itself.

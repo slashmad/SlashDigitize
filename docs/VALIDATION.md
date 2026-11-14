@@ -38,9 +38,9 @@ GTK icon lookup and the rendered brand image were verified.
 The dark interface with visible workflow navigation and the Audio recording tab
 was rendered on a private1440x1000 Weston display and visually inspected.
 
-GNOME51 SDK is not installed locally, so a full GNOME51 Flatpak build has not
-been completed. The manifest and isolated build route target51 without automatic
-downloads. The AppImage trial was subsequently built; see its validation below.
+The initial pass did not have the GNOME51 SDK and did not complete a Flatpak
+build. The later Flatpak addition below uses an isolated SDK installation.
+The AppImage trial was subsequently built; see its validation below.
 Real capture, compatible media playback, NVIDIA/other GPU behavior, long-running
 performance and Windows/macOS remain unverified.
 
@@ -80,7 +80,7 @@ The RPM spec now explicitly declares PyGObject, GTK4, libadwaita and
 GtkSourceView test/build dependencies. No clean mock buildroot was provisioned
 in this run. No real devices, installation or release publication was tested.
 The subsequent AppImage trial below implements the dependency bundle discussed
-in PORTABILITY.md. A self-contained Flatpak build remains incomplete.
+in PORTABILITY.md. The later Flatpak edition retains host media tools.
 
 ## Initial AppImage trial (2026-11-14, Codex)
 
@@ -145,3 +145,35 @@ The current native wheel/sdist/RPM/SRPM also build; all58 tests and desktop/
 AppStream validation pass in the RPM check. Initial RPM attempts hit sandbox
 write/socket restrictions; the final build used dedicated temporary files and
 authorized outside-sandbox execution. No packages were installed.
+
+## Flatpak addition (2026-11-14, Codex)
+
+Built `SlashDigitize-0.1.0-x86_64.flatpak` (1748928 bytes), SHA256
+`8a07aa3198f1363ac72d5b5a4016285379f9a02f5915da993b90ec29f20c4175`. The stable-branch bundle targets GNOME Platform51 and
+embeds Flathub's runtime-repository URL. It includes the GUI/source, desktop
+metadata and an approved 512px icon derivative; the 1254px original is unchanged.
+The runtime is shared, and Python/FFmpeg/ffprobe/arecord/VapourSynth media
+execution remains on the host.
+
+`scripts/test_flatpak.py` imports the exact bundle into a fresh temporary OSTree
+repository, checks it out and runs against Platform51 rather than the SDK. No
+application is installed. All58 tests pass on private Weston, plus all eight
+workflows/76 wheel guards, actual host bridge control of a simulated recorder,
+protected Close/Quit, asynchronous Stop and finalized WAV. Host FFmpeg encodes
+synthetic H.264, host ffprobe verifies it, and runtime GStreamer decodes it.
+Required GtkSource/GStreamer plugins and the 512px PNG load correctly. The
+rendered dark screenshot was inspected.
+
+The test uses the real Flatpak launcher. Its TMPDIR points to a cache directory
+visible under the same absolute path to GUI and host processes. A concat list
+created by production `write_concat_file()` with its default directory is read
+and decoded by host FFmpeg across the Flatpak boundary. This also supplies the
+default location for generated VapourSynth scripts; capture logic is unchanged.
+
+SDK51 was downloaded with repository verification into an isolated build-only
+directory. The normal user/system Flatpak installations were not changed. An
+initial attempt on the project filesystem hit a GPG ownership restriction; local
+`/tmp` resolved it. Export first rejected the oversized original desktop icon;
+the 512px derivative then passed normal icon validation. No validation was
+disabled. Real capture devices, GPU encoding and long recording sessions remain
+unqualified. The existing AppImage and release tag are preserved.

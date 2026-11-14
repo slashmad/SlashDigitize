@@ -22,7 +22,8 @@ modules:
       - install -Dpm 0755 packaging/flatpak-launcher /app/bin/slashdigitize
       - install -Dpm 0644 data/se.slashmad.SlashDigitize.desktop /app/share/applications/se.slashmad.SlashDigitize.desktop
       - install -Dpm 0644 data/se.slashmad.SlashDigitize.metainfo.xml /app/share/metainfo/se.slashmad.SlashDigitize.metainfo.xml
-      - install -Dpm 0644 data/se.slashmad.SlashDigitize.png /app/share/icons/hicolor/512x512/apps/se.slashmad.SlashDigitize.png
+      # Flatpak's desktop export validates the actual PNG size (maximum 512px).
+      - install -Dpm 0644 data/icons/hicolor/512x512/apps/se.slashmad.SlashDigitize.png /app/share/icons/hicolor/512x512/apps/se.slashmad.SlashDigitize.png
       - install -Dpm 0644 README.md /app/share/doc/slashdigitize/README.md
       - install -Dpm 0644 LICENSE /app/share/licenses/slashdigitize/LICENSE
     sources:
