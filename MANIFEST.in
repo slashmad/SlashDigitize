@@ -1,6 +1,7 @@
 include LICENSE README.md SOURCE_IMPORT.json
 recursive-include data *.desktop *.png *.xml
 recursive-include packaging *.spec *.yml *.py *.md *.json AppRun flatpak-launcher
+recursive-include packaging/debian *
 recursive-include scripts *.py
 recursive-include tests *.py
 recursive-include docs *.md

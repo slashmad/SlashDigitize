@@ -14,6 +14,7 @@ import tomllib
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--rpm", action="store_true")
+    parser.add_argument("--deb", action="store_true")
     parser.add_argument("--flatpak", action="store_true", help="Requires installed GNOME51 SDK/runtime; no downloads or installation")
     parser.add_argument("--out", type=Path)
     args = parser.parse_args()
@@ -51,6 +52,12 @@ def main():
             run(["rpmbuild", "-ba", "--define", f"_topdir {top}",
                  "--define", f"_tmppath {rpm_tmp}", str(source / "packaging/app.spec")])
             for path in [*top.glob("RPMS/*/*.rpm"), *top.glob("SRPMS/*.rpm")]:
+                shutil.copyfile(path, out / path.name)
+        if args.deb:
+            shutil.copytree(root / "packaging/debian", source / "debian")
+            os.chmod(source / "debian/rules", 0o755)
+            run(["dpkg-buildpackage", "-us", "-uc", "-b"])
+            for path in work.glob("*.deb"):
                 shutil.copyfile(path, out / path.name)
         if args.flatpak:
             repo = work / "flatpak-repo"

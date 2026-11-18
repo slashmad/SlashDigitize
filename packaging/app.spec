@@ -14,12 +14,12 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  appstream
 BuildRequires:  python3-gobject
 BuildRequires:  gtk4 >= 4.16
-BuildRequires:  libadwaita >= 1.8
+BuildRequires:  libadwaita >= 1.7
 BuildRequires:  gtksourceview5
 
 Requires:       python3-gobject
 Requires:       gtk4 >= 4.16
-Requires:       libadwaita >= 1.8
+Requires:       libadwaita >= 1.7
 Requires:       gtksourceview5
 Requires:       alsa-utils
 Requires:       /usr/bin/ffmpeg

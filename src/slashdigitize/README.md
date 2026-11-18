@@ -170,26 +170,30 @@ XRUNs needs review; a finished WAV does not by itself establish a lossless trans
 
 ## Build and run from source
 
-Use Python 3.12+ and native PyGObject/Cairo, GTK4 4.16+, libadwaita 1.8+ and GtkSourceView 5.
+Use Python 3.12+ and native PyGObject/Cairo, GTK4 4.16+, libadwaita 1.7+ and GtkSourceView 5.
 On Fedora, the packages include `python3-gobject`, `gtk4`, `libadwaita`, `gtksourceview5`,
 `alsa-utils`, FFmpeg/ffprobe, `gstreamer1`, `gstreamer1-plugins-base`,
-`gstreamer1-plugins-good` and `gstreamer1-plugin-gtk4`. Codec availability depends on the
-installed media builds. VapourSynth/vspipe and processing filters are optional.
+`gstreamer1-plugins-good` and `gstreamer1-plugin-gtk4`. On Debian 13+/Ubuntu 26.04+, install
+`python3-gi`, `python3-gi-cairo`, `gir1.2-gtk-4.0`, `gir1.2-adw-1`, `gir1.2-gtksource-5`,
+`alsa-utils`, `ffmpeg`, `gstreamer1.0-plugins-base`, `gstreamer1.0-plugins-good` and
+`gstreamer1.0-gtk4`. VapourSynth/vspipe and processing filters are optional.
 Use the system Python with GI support rather than replacing it with arbitrary pip packages.
 
 ```sh
 PYTHONPATH=src python3 -m slashdigitize
 PYTHONPATH=src python3 -B -m unittest discover -s tests -v
 python3 -B scripts/smoke.py
-python3 -B scripts/build.py --out artifacts/native --rpm
+python3 -B scripts/build.py --out artifacts/native --rpm   # Fedora RPM
+python3 -B scripts/build.py --out artifacts/deb --deb      # Debian / Ubuntu .deb
 ```
 
 Builds need setuptools 77+; the GUI smoke test needs Weston. The smoke test uses a private
 display, simulated devices and a fake WAV recorder. It opens no capture hardware.
 
 The GitHub Actions workflow (`.github/workflows/ci.yml`) runs the unit tests, the headless
-Weston UI smoke test and the wheel/sdist/RPM build in a Fedora 45 container on every push and
-pull request.
+Weston UI smoke test and native packaging across Fedora 44/45 (`.rpm`), Ubuntu 26.04 and
+Debian 13/Testing (`.deb`), plus the GNOME 51 Flatpak bundle build on every push and pull
+request.
 
 The [AppImage recipe](packaging/appimage/README.md) documents its locked runtime, build and
 payload verification. The native RPM uses system dependencies. Build the GNOME 51

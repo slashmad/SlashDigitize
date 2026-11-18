@@ -394,19 +394,33 @@ class MainWindow(Adw.ApplicationWindow):
         dialog.present(self)
 
     def _show_shortcuts(self) -> None:
-        dialog = Adw.ShortcutsDialog()
-        general = Adw.ShortcutsSection(title=_("General"))
-        for title, accel in [(_("Show or hide workflows"), "F9"), (_("Keyboard shortcuts"), "<Primary>question"),
-                             (_("Quit"), "<Primary>q")]:
-            general.add(Adw.ShortcutsItem(title=title, accelerator=accel))
-        nav = Adw.ShortcutsSection(title=_("Workflows"))
-        for index, name in enumerate(self.rows, start=1):
-            nav.add(Adw.ShortcutsItem(title=PAGES[name][0], accelerator=f"<Alt>{index}"))
-        audio = Adw.ShortcutsSection(title=_("Audio recording"))
-        audio.add(Adw.ShortcutsItem(title=_("Record / Stop (on the Audio page)"), accelerator="<Primary>r"))
-        for section in (general, nav, audio):
-            dialog.add(section)
-        dialog.present(self)
+        sections = [
+            (_("General"), [(_("Show or hide workflows"), "F9"), (_("Keyboard shortcuts"), "<Primary>question"),
+                            (_("Quit"), "<Primary>q")]),
+            (_("Workflows"), [(PAGES[name][0], f"<Alt>{index}") for index, name in enumerate(self.rows, start=1)]),
+            (_("Audio recording"), [(_("Record / Stop (on the Audio page)"), "<Primary>r")]),
+        ]
+        if hasattr(Adw, "ShortcutsDialog"):
+            dialog = Adw.ShortcutsDialog()
+            for heading, items in sections:
+                section = Adw.ShortcutsSection(title=heading)
+                for title, accel in items:
+                    section.add(Adw.ShortcutsItem(title=title, accelerator=accel))
+                dialog.add(section)
+            dialog.present(self)
+            return
+        # libadwaita 1.7 fallback (e.g. Debian 13 Trixie) before Adw.ShortcutsDialog (1.8).
+        page = Adw.PreferencesPage()
+        for heading, items in sections:
+            group = Adw.PreferencesGroup(title=heading)
+            for title, accel in items:
+                row = Adw.ActionRow(title=title, use_markup=False)
+                row.add_suffix(Gtk.ShortcutLabel(accelerator=accel, valign=Gtk.Align.CENTER))
+                group.add(row)
+            page.add(group)
+        view = Adw.ToolbarView(content=page)
+        view.add_top_bar(Adw.HeaderBar())
+        Adw.Dialog(title=_("Keyboard shortcuts"), child=view, content_width=460, content_height=520).present(self)
 
     # --------------------------------------------------------- capabilities
     def on_refresh_clicked(self, *_args) -> None:

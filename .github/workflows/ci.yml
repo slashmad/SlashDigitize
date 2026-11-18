@@ -1,6 +1,8 @@
-# Unit tests, headless Weston UI smoke test and Fedora 45 wheel/sdist/RPM build on every
-# push to main and every pull request. Real capture devices and GPU encoding remain outside
-# CI scope; the AppImage and Flatpak release recipes are documented in packaging/.
+# Multi-distro Linux verification and packaging:
+# - Fedora 44/45 (.rpm, wheel, sdist)
+# - Ubuntu 26.04 and Debian 13/Testing (.deb, wheel, sdist)
+# - Flatpak bundle against GNOME 51
+# Real capture devices and GPU encoding remain outside CI scope.
 name: Verify and package
 
 on:
@@ -22,12 +24,18 @@ env:
   GIT_CONFIG_VALUE_0: ${{ github.workspace }}
 
 jobs:
-  fedora-45:
-    name: Fedora 45 verify and package
+  rpm:
+    name: ${{ matrix.name }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {fedora: "44", name: Fedora 44 (.rpm)}
+          - {fedora: "45", name: Fedora 45 (.rpm)}
     container:
-      image: quay.io/fedora/fedora:45
+      image: quay.io/fedora/fedora:${{ matrix.fedora }}
     defaults:
       run:
         shell: bash
@@ -50,14 +58,103 @@ jobs:
         run: python3 -B scripts/smoke.py
 
       - name: Build wheel, sdist and Fedora RPM
-        run: python3 -B scripts/build.py --out artifacts/ci-native --rpm
+        run: python3 -B scripts/build.py --out artifacts/ci-rpm-${{ matrix.fedora }} --rpm
 
       - uses: actions/upload-artifact@v4
         with:
-          name: SlashDigitize-Fedora45-x86_64
+          name: SlashDigitize-Fedora${{ matrix.fedora }}-x86_64
           if-no-files-found: error
           retention-days: 14
           path: |
-            artifacts/ci-native/*.whl
-            artifacts/ci-native/*.tar.gz
-            artifacts/ci-native/*.rpm
+            artifacts/ci-rpm-${{ matrix.fedora }}/*.whl
+            artifacts/ci-rpm-${{ matrix.fedora }}/*.tar.gz
+            artifacts/ci-rpm-${{ matrix.fedora }}/*.rpm
+
+  deb:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {image: "ubuntu:26.04", slug: "ubuntu26.04", name: "Ubuntu 26.04 (.deb)"}
+          - {image: "debian:trixie", slug: "debian13", name: "Debian 13 Trixie (.deb)"}
+          - {image: "debian:testing", slug: "debian-testing", name: "Debian Testing (.deb)"}
+    container:
+      image: ${{ matrix.image }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Install build and test dependencies
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            ca-certificates git tar gzip findutils \
+            debhelper dh-python pybuild-plugin-pyproject dpkg-dev fakeroot \
+            python3 python3-all python3-pip python3-wheel python3-setuptools \
+            python3-gi python3-gi-cairo python3-cairo \
+            gir1.2-gtk-4.0 gir1.2-adw-1 gir1.2-gtksource-5 adwaita-icon-theme \
+            desktop-file-utils appstream weston
+
+      - uses: actions/checkout@v4
+
+      - name: Run unit tests
+        run: PYTHONPATH=src python3 -B -m unittest discover -s tests -v
+
+      - name: Run headless Weston UI smoke test
+        run: python3 -B scripts/smoke.py
+
+      - name: Build wheel, sdist and Debian package
+        run: python3 -B scripts/build.py --out artifacts/ci-deb-${{ matrix.slug }} --deb
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SlashDigitize-${{ matrix.slug }}-deb
+          if-no-files-found: error
+          retention-days: 14
+          path: |
+            artifacts/ci-deb-${{ matrix.slug }}/*.deb
+            artifacts/ci-deb-${{ matrix.slug }}/*.whl
+            artifacts/ci-deb-${{ matrix.slug }}/*.tar.gz
+
+  flatpak:
+    name: Flatpak (GNOME 51)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Flatpak tooling and GNOME 51 SDK
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y flatpak flatpak-builder ostree python3-pip python3-wheel python3-setuptools
+          flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+          flatpak install --user -y --noninteractive flathub org.gnome.Platform//51 org.gnome.Sdk//51
+
+      - name: Build Flatpak bundle
+        run: python3 -B scripts/build.py --flatpak --out artifacts/ci-flatpak
+
+      - name: Verify Flatpak bundle structure
+        run: |
+          ostree --repo=artifacts/ci-flatpak/verify-repo init --mode=archive
+          flatpak build-import-bundle artifacts/ci-flatpak/verify-repo artifacts/ci-flatpak/*.flatpak
+          flatpak build-export --help >/dev/null
+          ostree --repo=artifacts/ci-flatpak/verify-repo checkout --user-mode app/se.slashmad.SlashDigitize/$(uname -m)/stable artifacts/ci-flatpak/verify-checkout
+          test -f artifacts/ci-flatpak/verify-checkout/files/bin/slashdigitize
+          test -f artifacts/ci-flatpak/verify-checkout/files/share/slashdigitize/slashdigitize/app.py
+          (cd artifacts/ci-flatpak && sha256sum -c *.flatpak.sha256)
+          rm -rf artifacts/ci-flatpak/verify-repo artifacts/ci-flatpak/verify-checkout
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SlashDigitize-Flatpak-x86_64
+          if-no-files-found: error
+          retention-days: 14
+          path: |
+            artifacts/ci-flatpak/*.flatpak
+            artifacts/ci-flatpak/*.flatpak.sha256
+            artifacts/ci-flatpak/flatpak-build.json

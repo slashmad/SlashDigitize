@@ -1,0 +1,11 @@
+#!/usr/bin/make -f
+export PYBUILD_NAME=slashdigitize
+export PYTHONDONTWRITEBYTECODE=1
+
+%:
+	dh $@ --buildsystem=pybuild
+
+override_dh_auto_test:
+	PYTHONPATH=src python3 -B -m unittest discover -s tests -v
+	desktop-file-validate data/se.slashmad.SlashDigitize.desktop
+	appstreamcli validate --no-net --strict data/se.slashmad.SlashDigitize.metainfo.xml

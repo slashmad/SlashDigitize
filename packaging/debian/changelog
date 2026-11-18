@@ -1,0 +1,5 @@
+slashdigitize (0.1.0-1) unstable; urgency=medium
+
+  * Initial Debian/Ubuntu package for SlashDigitize 0.1.0.
+
+ -- slashmad <69733863+slashmad@users.noreply.github.com>  Wed, 18 Nov 2026 09:47:00 +0100

@@ -1,0 +1,40 @@
+Source: slashdigitize
+Section: video
+Priority: optional
+Maintainer: slashmad <69733863+slashmad@users.noreply.github.com>
+Build-Depends:
+ debhelper-compat (= 13),
+ dh-sequence-python3,
+ pybuild-plugin-pyproject,
+ python3-all,
+ python3-setuptools (>= 77),
+ python3-gi,
+ python3-gi-cairo,
+ python3-cairo,
+ gir1.2-gtk-4.0 (>= 4.16),
+ gir1.2-adw-1 (>= 1.7),
+ gir1.2-gtksource-5,
+ desktop-file-utils,
+ appstream
+Standards-Version: 4.7.0
+Homepage: https://github.com/slashmad/SlashDigitize
+
+Package: slashdigitize
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+ python3-gi,
+ python3-gi-cairo,
+ python3-cairo,
+ gir1.2-gtk-4.0 (>= 4.16),
+ gir1.2-adw-1 (>= 1.7),
+ gir1.2-gtksource-5,
+ alsa-utils,
+ ffmpeg,
+ gstreamer1.0-plugins-base,
+ gstreamer1.0-plugins-good,
+ gstreamer1.0-gtk4
+Description: Audio and video digitization workstation
+ GTK4/libadwaita workstation combining direct arecord audio capture and
+ FFmpeg video capture, trimming, timelapse and optional VapourSynth workflows.

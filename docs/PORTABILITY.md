@@ -1,9 +1,13 @@
 # Distribution and portability
 
-Fedora 45 native RPM is the first packaging target. Native GTK/GI/GStreamer and
-ALSA dependencies are declared in the spec. FFmpeg and ffprobe are required by
-executable path so either suitable distro or third-party packages may provide
-them. Codec and hardware support must be checked from the actual builds.
+Fedora 44/45 native RPM (`packaging/app.spec`) and Debian 13+/Ubuntu 26.04+ `.deb`
+(`packaging/debian/`) are the native packaging targets (requiring Python 3.12+, GTK4 4.16+,
+libadwaita 1.7+ with a 1.7 fallback for keyboard shortcuts, and GtkSourceView 5). Native
+GTK/GI/GStreamer and ALSA dependencies are declared in the package metadata. FFmpeg and
+ffprobe are required by executable path so either suitable distro or third-party packages may
+provide them. Codec and hardware support must be checked from the actual builds. Older Linux
+distributions without GTK4 4.16+ / libadwaita 1.7+ (such as Ubuntu 24.04 or Debian 12) can
+use the GNOME 51 Flatpak instead, with host media tools installed.
 
 The Flatpak targets GNOME Platform/SDK 51; source is copied explicitly without
 Git history, captures or local agent memory. Its single-file bundle points to
