@@ -8,7 +8,14 @@
   A graphical workbench for bringing your family's old video and audio tapes into the digital world.
 </p>
 
----
+<p align="center">
+  <a href="https://github.com/slashmad/SlashDigitize/releases/latest">Download</a> ·
+  <a href="#quick-start">Quick start</a> ·
+  <a href="https://github.com/slashmad/SlashDigitize/issues">Report a problem</a>
+</p>
+
+![Verify and package](https://github.com/slashmad/SlashDigitize/actions/workflows/ci.yml/badge.svg)
+![License: GPL-3.0-or-later](https://img.shields.io/badge/License-GPL--3.0--or--later-blue.svg)
 
 After moving from Windows to Fedora, I missed this kind of application. Linux already has
 powerful tools for recording and processing video and audio, but much of that power lives in
@@ -179,6 +186,10 @@ python3 -B scripts/build.py --out artifacts/native --rpm
 
 Builds need setuptools 77+; the GUI smoke test needs Weston. The smoke test uses a private
 display, simulated devices and a fake WAV recorder. It opens no capture hardware.
+
+The GitHub Actions workflow (`.github/workflows/ci.yml`) runs the unit tests, the headless
+Weston UI smoke test and the wheel/sdist/RPM build in a Fedora 45 container on every push and
+pull request.
 
 The [AppImage recipe](packaging/appimage/README.md) documents its locked runtime, build and
 payload verification. The native RPM uses system dependencies. Build the GNOME 51
