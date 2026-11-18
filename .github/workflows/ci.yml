@@ -93,7 +93,7 @@ jobs:
         run: |
           apt-get update
           apt-get install -y --no-install-recommends \
-            ca-certificates git tar gzip findutils \
+            build-essential ca-certificates git tar gzip findutils \
             debhelper dh-python pybuild-plugin-pyproject dpkg-dev fakeroot \
             python3 python3-all python3-pip python3-wheel python3-setuptools \
             python3-gi python3-gi-cairo python3-cairo \
@@ -131,7 +131,9 @@ jobs:
       - name: Install Flatpak tooling and GNOME 51 SDK
         run: |
           sudo apt-get update
-          sudo apt-get install -y flatpak flatpak-builder ostree python3-pip python3-wheel python3-setuptools
+          sudo apt-get install -y --no-install-recommends \
+            flatpak flatpak-builder ostree ca-certificates \
+            python3-pip python3-wheel python3-setuptools
           flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
           flatpak install --user -y --noninteractive flathub org.gnome.Platform//51 org.gnome.Sdk//51
 
