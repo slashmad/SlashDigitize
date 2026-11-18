@@ -15,6 +15,7 @@ import subprocess
 import sys
 import sysconfig
 import time
+import tomllib
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNTIME_LOCK = json.loads((ROOT/"packaging/appimage/runtime-lock.json").read_text())
@@ -228,7 +229,8 @@ exec /lib64/ld-linux-x86-64.so.2 --library-path "$SLASHDIGITIZE_APPDIR/usr/lib" 
     write("usr/share/slashdigitize-bundle/manifest.json",json.dumps(manifest,indent=2)+"\n")
     squash=work/"payload.squashfs"
     run(["mksquashfs",str(app),str(squash),"-noappend","-comp","zstd","-Xcompression-level","10","-all-root","-processors","4"],stdout=subprocess.DEVNULL)
-    output=out/"SlashDigitize-0.1.0-x86_64-fedora45.AppImage"
+    app_version=tomllib.loads((ROOT/"pyproject.toml").read_text())["project"]["version"]
+    output=out/f"SlashDigitize-{app_version}-x86_64-fedora45.AppImage"
     if output.exists():raise RuntimeError(f"Refusing to overwrite existing artifact: {output}")
     with output.open('wb') as dest:
         for source in [args.runtime,squash]:

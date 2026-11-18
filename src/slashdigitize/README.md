@@ -31,12 +31,14 @@ media work underneath.
 
 ![SlashDigitize audio recording page, with stereo meters, level history and grouped recording controls](docs/images/slashdigitize.png)
 
-> **Status:** early development, 0.1.0. Linux is the current target. The AppImage is built and
-> tested on Fedora 45 x86_64; it includes the GUI and media tools. The combined application has
-> automated and simulated recording tests, and its window has been checked on a real NVIDIA
-> Wayland desktop. The hardware experience below comes from the predecessor applications;
-> the new AppImage has not yet been qualified through full real-device recording sessions.
-> Older Linux distributions, Windows and macOS are not currently supported releases.
+> **Status:** early development, 0.2.0. Linux is the current target, with CI verification and
+> native packages across Fedora 44/45 (`.rpm`), Ubuntu 26.04 and Debian 13/Testing (`.deb`),
+> plus a GNOME 51 Flatpak and a Fedora 45 AppImage (which bundles the GUI and media tools). The
+> combined application has automated and simulated recording tests, and its window has been checked
+> on a real NVIDIA Wayland desktop. The hardware experience below comes from the predecessor
+> applications; real-device recording sessions remain to be qualified in the combined app. Older
+> Linux distributions without GTK4 4.16+ / libadwaita 1.7+ should use the Flatpak; Windows and
+> macOS are not currently supported releases.
 
 ## Background and the equipment behind it
 
@@ -90,15 +92,19 @@ Download a package from [Releases](https://github.com/slashmad/SlashDigitize/rel
 
 | System | File | Requirements |
 |---|---|---|
-| Fedora 45 x86_64 | `SlashDigitize-0.1.0-x86_64-fedora45.AppImage` | Fedora 45 / glibc 2.44 baseline; working display and capture drivers |
-| Linux x86_64 / Flatpak | `SlashDigitize-0.1.0-x86_64.flatpak` | GNOME 51 runtime from Flathub; host Python/FFmpeg/ffprobe/arecord and capture drivers |
+| Fedora 44 / 45 x86_64 (RPM) | `slashdigitize-0.2.0-1.fc44.noarch.rpm`, `.fc45.noarch.rpm` | Native system packages (`gtk4`, `libadwaita`, `ffmpeg`, `alsa-utils`, `gstreamer1-plugin-gtk4`) |
+| Debian 13+ / Ubuntu 26.04+ (`.deb`) | `slashdigitize_0.2.0-1_all.deb` | Native system packages (`gir1.2-gtk-4.0`, `gir1.2-adw-1 >= 1.7`, `ffmpeg`, `alsa-utils`, `gstreamer1.0-gtk4`) |
+| Fedora 45 x86_64 (AppImage) | `SlashDigitize-0.2.0-x86_64-fedora45.AppImage` | Fedora 45 / glibc 2.44 baseline; working display and capture drivers |
+| Linux x86_64 (Flatpak) | `SlashDigitize-0.2.0-x86_64.flatpak` | GNOME 51 runtime from Flathub; host Python/FFmpeg/ffprobe/arecord and capture drivers |
+
+`SHA256SUMS.txt` on each release lists a checksum for every file.
 
 ```sh
-chmod +x SlashDigitize-0.1.0-x86_64-fedora45.AppImage
-./SlashDigitize-0.1.0-x86_64-fedora45.AppImage
+chmod +x SlashDigitize-0.2.0-x86_64-fedora45.AppImage
+./SlashDigitize-0.2.0-x86_64-fedora45.AppImage
 ```
 
-The package includes Python, GTK4/libadwaita/GtkSourceView, GStreamer,
+The AppImage includes Python, GTK4/libadwaita/GtkSourceView, GStreamer,
 **FFmpeg 9.0.2 and ffprobe**, arecord/ALSA, and base VapourSynth/vspipe. There is no need to
 install those separately to try the AppImage. Kernel support, device permissions and the
 matching GPU/Blackmagic drivers still come from your system. Optional VapourSynth filters
@@ -107,10 +113,10 @@ and VSRepo metadata are separate.
 If FUSE mounting is unavailable, use:
 
 ```sh
-./SlashDigitize-0.1.0-x86_64-fedora45.AppImage --appimage-extract-and-run
+./SlashDigitize-0.2.0-x86_64-fedora45.AppImage --appimage-extract-and-run
 ```
 
-A checksum and component inventory accompany the release. This build deliberately targets
+A checksum and component inventory accompany the release. The AppImage build deliberately targets
 Fedora 45; an AppImage built there is not automatically compatible with older distributions.
 It does not install itself or change your drivers.
 
@@ -119,7 +125,7 @@ It does not install itself or change your drivers.
 Install the downloaded single-file bundle and run it:
 
 ```sh
-flatpak install --user ./SlashDigitize-0.1.0-x86_64.flatpak
+flatpak install --user ./SlashDigitize-0.2.0-x86_64.flatpak
 flatpak run se.slashmad.SlashDigitize
 ```
 

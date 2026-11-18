@@ -1,5 +1,5 @@
 Name:           slashdigitize
-Version:        0.1.0
+Version:        0.2.0
 Release:        1%{?dist}
 Summary:        Audio and video digitization workstation
 
@@ -65,5 +65,8 @@ appstreamcli validate --no-net --strict data/se.slashmad.SlashDigitize.metainfo.
 %{_datadir}/icons/hicolor/512x512/apps/se.slashmad.SlashDigitize.png
 
 %changelog
+* Wed Nov 18 2026 slashmad - 0.2.0-1
+- Add Debian/Ubuntu .deb packaging, libadwaita 1.7 fallback, multi-distro CI and README header/badges.
+
 * Sat Nov 14 2026 slashmad - 0.1.0-1
 - Import reviewed audio/video tools into SlashDigitize.

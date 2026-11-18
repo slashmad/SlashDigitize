@@ -12,5 +12,8 @@
  <launchable type="desktop-id">se.slashmad.SlashDigitize.desktop</launchable>
  <provides><binary>slashdigitize</binary></provides>
  <content_rating type="oars-1.1"/>
- <releases><release version="0.1.0" date="2026-11-14"><description><p>Initial combined development version.</p></description></release></releases>
+ <releases>
+  <release version="0.2.0" date="2026-11-18"><description><p>Add native Debian/Ubuntu .deb packaging, libadwaita 1.7 compatibility fallback, multi-distro CI and README links/badges.</p></description></release>
+  <release version="0.1.0" date="2026-11-14"><description><p>Initial combined development version.</p></description></release>
+ </releases>
 </component>

@@ -27,7 +27,7 @@ from slashdigitize.video.vapoursynth_page import VapourSynthPage  # noqa: E402
 from slashdigitize.video.vapoursynth_process import VapourSynthProcessPage  # noqa: E402
 
 APP_ICON = "se.slashmad.SlashDigitize"
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 
 # (stack name, title, header subtitle, icon); grouped into sidebar sections.
 SECTIONS = [
