@@ -39,10 +39,13 @@ def main():
         shutil.copyfile(source / "README.md", source / "src/slashdigitize/README.md")
         def run(command):
             subprocess.run(command, cwd=source, env=env, check=True)
-        run([sys.executable, "-m", "pip", "wheel", "--no-deps", "--no-build-isolation", "--no-cache-dir", "--wheel-dir", str(out), "."])
-        run([sys.executable, "-c", "import setuptools.build_meta; setuptools.build_meta.build_sdist('dist')"])
-        archive = next((source / "dist").glob("*.tar.gz"))
-        shutil.copyfile(archive, out / archive.name)
+        if args.rpm or args.deb or not args.flatpak:
+            run([sys.executable, "-m", "pip", "wheel", "--no-deps", "--no-build-isolation", "--no-cache-dir", "--wheel-dir", str(out), "."])
+            run([sys.executable, "-c", "import setuptools.build_meta; setuptools.build_meta.build_sdist('dist')"])
+            archive = next((source / "dist").glob("*.tar.gz"))
+            shutil.copyfile(archive, out / archive.name)
+        else:
+            archive = None
         if args.rpm:
             top = work / "rpmbuild"
             rpm_tmp = work / "rpm-tmp"
