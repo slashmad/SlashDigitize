@@ -1,0 +1,40 @@
+{
+  "SlashDigitize-Fedora44-x86_64": {
+    "slashdigitize-VERSION-1.fc44.noarch.rpm": "publish",
+    "slashdigitize-VERSION-1.fc44.src.rpm": "publish",
+    "slashdigitize-VERSION-py3-none-any.whl": "skip",
+    "slashdigitize-VERSION.tar.gz": "skip"
+  },
+  "SlashDigitize-Fedora45-x86_64": {
+    "slashdigitize-VERSION-1.fc45.noarch.rpm": "publish",
+    "slashdigitize-VERSION-1.fc45.src.rpm": "publish",
+    "slashdigitize-VERSION-py3-none-any.whl": "publish",
+    "slashdigitize-VERSION.tar.gz": "publish"
+  },
+  "SlashDigitize-debian13-deb": {
+    "slashdigitize_VERSION-1_all.deb": "publish",
+    "slashdigitize-VERSION-py3-none-any.whl": "skip",
+    "slashdigitize-VERSION.tar.gz": "skip"
+  },
+  "SlashDigitize-debian-testing-deb": {
+    "slashdigitize_VERSION-1_all.deb": "skip",
+    "slashdigitize-VERSION-py3-none-any.whl": "skip",
+    "slashdigitize-VERSION.tar.gz": "skip"
+  },
+  "SlashDigitize-ubuntu26.04-deb": {
+    "slashdigitize_VERSION-1_all.deb": "skip",
+    "slashdigitize-VERSION-py3-none-any.whl": "skip",
+    "slashdigitize-VERSION.tar.gz": "skip"
+  },
+  "SlashDigitize-Flatpak-x86_64": {
+    "SlashDigitize-VERSION-x86_64.flatpak": "publish",
+    "SlashDigitize-VERSION-x86_64.flatpak.sha256": "publish",
+    "flatpak-build.json": "publish"
+  },
+  "SlashDigitize-AppImage-x86_64": {
+    "SlashDigitize-VERSION-x86_64-fedora45.AppImage": "publish",
+    "SlashDigitize-VERSION-x86_64-fedora45.AppImage.sha256": "publish",
+    "validation.json": "publish",
+    "bundle-manifest.json": "publish"
+  }
+}

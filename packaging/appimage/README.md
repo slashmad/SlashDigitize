@@ -106,3 +106,14 @@ The first release targets Fedora45 x86_64. Real capture/playback, GPU encoding,
 long recordings, physical input and other distributions still require separate
 qualification. Releases publish the AppImage with its checksum and inventory;
 the build script itself performs no signing or publication.
+
+## GitHub release handoff
+
+Build and test the versioned AppImage from the release commit. Stage the AppImage,
+its `.sha256`, `bundle-manifest.json` and `validation.json` on the GitHub release
+draft for that version. The report records the digest of the tested image.
+Push the version tag to start **Publish CI packages**, or dispatch it from
+`main` after staging. The job selects the successful main build for that tag,
+checks the AppImage against the tagged application sources, and promotes all
+packages on GitHub. Select **verify_only** to inspect the complete set while
+leaving the release draft in place.

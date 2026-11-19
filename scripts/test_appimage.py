@@ -1,5 +1,6 @@
 """Extract and verify an AppImage on private Weston; never open capture devices."""
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -18,7 +19,9 @@ def main():
     parser.add_argument("--screenshot",type=Path)
     args=parser.parse_args()
     image=args.image.resolve()
-    report={"image":str(image),"hardware_opened":False,"installed":False,"checks":[]}
+    with image.open("rb") as stream:
+        image_digest = hashlib.file_digest(stream, "sha256").hexdigest()
+    report={"image":image.name,"image_sha256":image_digest,"hardware_opened":False,"installed":False,"checks":[]}
     with tempfile.TemporaryDirectory(prefix="slashdigitize-image-test-") as folder:
         work=Path(folder)
         env={k:v for k,v in os.environ.items() if k not in ("APPDIR","PYTHONPATH","PYTHONHOME","LD_LIBRARY_PATH")}
