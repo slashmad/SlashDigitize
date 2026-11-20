@@ -14,8 +14,8 @@
   <a href="https://github.com/slashmad/SlashDigitize/issues">Report a problem</a>
 </p>
 
-![Verify and package](https://github.com/slashmad/SlashDigitize/actions/workflows/ci.yml/badge.svg)
-![License: GPL-3.0-or-later](https://img.shields.io/badge/License-GPL--3.0--or--later-blue.svg)
+![Verify and package](https://img.shields.io/github/actions/workflow/status/slashmad/SlashDigitize/ci.yml?style=flat-square)
+![License: GPL-3.0-or-later](https://img.shields.io/badge/License-GPL--3.0--or--later-blue.svg?style=flat-square)
 
 After moving from Windows to Fedora, I missed this kind of application. Linux already has
 powerful tools for recording and processing video and audio, but much of that power lives in
@@ -240,6 +240,6 @@ icon is the new SlashmadFFmpegGUI icon, retained unchanged.
 
 Like SlashDigitize? Buy me a beer 🍺
 
-[![GitHub Sponsors](https://img.shields.io/badge/GitHub-Sponsors-EA4AAA?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/slashmad)
-[![Ko-fi](https://img.shields.io/badge/Ko--fi-buy%20me%20a%20beer-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/slashmad)
-[![Liberapay](https://img.shields.io/badge/Liberapay-donate-F6C915?logo=liberapay&logoColor=black)](https://liberapay.com/slashmad/)
+[![GitHub Sponsors](https://img.shields.io/badge/GitHub-Sponsors-EA4AAA?logo=githubsponsors&logoColor=white&style=flat-square)](https://github.com/sponsors/slashmad)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-buy%20me%20a%20beer-FF5E5B?logo=ko-fi&logoColor=white&style=flat-square)](https://ko-fi.com/slashmad)
+[![Liberapay](https://img.shields.io/badge/Liberapay-donate-F6C915?logo=liberapay&logoColor=black&style=flat-square)](https://liberapay.com/slashmad/)
