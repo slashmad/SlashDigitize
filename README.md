@@ -15,6 +15,7 @@
 </p>
 
 ![Verify and package](https://img.shields.io/github/actions/workflow/status/slashmad/SlashDigitize/ci.yml?style=flat-square)
+[![Latest release](https://img.shields.io/github/v/release/slashmad/SlashDigitize?style=flat-square&label=latest%20release)](https://github.com/slashmad/SlashDigitize/releases/latest)
 ![License: GPL-3.0-or-later](https://img.shields.io/badge/License-GPL--3.0--or--later-blue.svg?style=flat-square)
 
 After moving from Windows to Fedora, I missed this kind of application. Linux already has
